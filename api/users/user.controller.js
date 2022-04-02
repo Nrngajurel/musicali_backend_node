@@ -49,7 +49,7 @@ module.exports = {
         });
     },
     getUsers: (req,res)=>{
-        this.getUsers((err,results)=>{
+        getAllUser((err,results)=>{
             if(err){
                 console.log(err);
                 return;

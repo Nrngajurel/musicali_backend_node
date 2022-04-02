@@ -36,14 +36,14 @@ module.exports = {
     },
     updateUser: (data,callBack)=>{
         pool.query(
-            `update customer set name=?, address=?, password=?, email=?, password=? 
+            `update customer set name=?, address=?, password=?, email=?, number=? 
             where id = ?`,
             [
             data.name,
             data.address,
             data.password,
             data.email,
-            data.password,
+            data.number,
             data.id
         ],
         (error,results,fields)=>{
@@ -54,7 +54,7 @@ module.exports = {
     deleteUser: (data,callBack)=>{
         pool.query(`delete from customer where id=?`,
         [data.id],
-        (error,results,fileds)=>{
+        (error,results,fields)=>{
             if(error) return callBack(error);
             return callBack(null,results[0]);
         });
