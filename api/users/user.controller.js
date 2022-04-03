@@ -25,7 +25,7 @@ module.exports = {
             }
             return res.status(200).json({
                 success: 1,
-                message: results
+                data: results
             });
         });
     },
@@ -96,7 +96,7 @@ module.exports = {
     },
     login: (req,res)=>{
         const body = req.body;
-        getUserByEmail(body.email, (err,results)=>{
+        getUserByEmail(body, (err,results)=>{
             if(err){
                 console.log(err);
             }

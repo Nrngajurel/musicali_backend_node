@@ -2,8 +2,7 @@ const pool = require("../../config/database");
 
 module.exports = {
     create: (data, callBack)=>{
-        pool.query(`insert into customer(name, address, number, password, email)
-                    values(?,?,?,?,?)`),
+        pool.query(`insert into customer (name, address, number, password, email) values (?, ?, ?, ?, ?)`,
                     [
                         data.name,
                         data.address,
@@ -17,23 +16,23 @@ module.exports = {
                         }
                         return callBack(null,results);
                     } 
-    },
+        )},
     getAllUser: callBack=>{
-        pool.query(`select id, name, email, password, address, number from customer`),
+        pool.query(`select id, name, email, password, address, number from customer`,
         [],
         (error,results,fields)=>{
             if(error) return callBack(error);
             return callBack(null, results);
         }
-    },
+        )},
     getUserById: (id,callBack)=>{
-        pool.query(`select name, address, number, email from customer where id = ?`),
+        pool.query(`select name, address, number, email from customer where id = ?`,
         [id],
         (error,results,fields)=>{
             if(error) return callBack(error);
             return callBack(null,results[0]);
         }
-    },
+        )},
     updateUser: (data,callBack)=>{
         pool.query(
             `update customer set name=?, address=?, password=?, email=?, number=? 
@@ -67,6 +66,6 @@ module.exports = {
                 callBack(error);
             }
             return callBack(null,results[0]);
-        })
+        });
     }
 };  
