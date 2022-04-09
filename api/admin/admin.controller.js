@@ -4,7 +4,6 @@ const {
     getAdminByUsername
 } = require("./admin.service");
 
-const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken")
 
 module.exports = {
@@ -28,8 +27,6 @@ module.exports = {
     // },
     updateAdmin: (req,res)=>{
         const body = req.body;
-        const salt = genSaltSync(10);
-        body.password = hashSync(body.password, salt);
         updateAdmin(body,(err,results)=>{
             if(err){
                 console.log(err);
@@ -72,7 +69,7 @@ module.exports = {
                     data: "Invalid password or username"
                 });
             }
-            const result = bodu.password == results.password;
+            const result = body.password == results.password;
             if(result){
                 results.password = undefined;
                 const jsonToken = sign({ result: results }, process.env.JWT_KEY, {
