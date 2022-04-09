@@ -1,5 +1,4 @@
 const {
-    create,
     updateAdmin,
     deleteAdmin,
     getAdminByUsername
@@ -73,7 +72,7 @@ module.exports = {
                     data: "Invalid password or username"
                 });
             }
-            const result = compareSync(body.password, results.password);
+            const result = bodu.password == results.password;
             if(result){
                 results.password = undefined;
                 const jsonToken = sign({ result: results }, process.env.JWT_KEY, {
@@ -90,5 +89,5 @@ module.exports = {
                 });
             }
         });
-    }
+    },
 }

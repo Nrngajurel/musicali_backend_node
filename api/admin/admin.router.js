@@ -1,4 +1,4 @@
-const { createAdmin, updateAdmin, deleteAdmin, loginAdmin } = require("./Admin.controller");
+const {updateAdmin, deleteAdmin, loginAdmin } = require("./Admin.controller");
 const router = require("express").Router();
 const { checkToken } = require("../../auth/token.validation");
 
