@@ -45,55 +45,75 @@ module.exports = {
         const body = req.body;
         const salt = genSaltSync(10);
         body.password = hashSync(body.password, salt);
-        create(body,(err,results)=>{
+        getUserByEmail(body,(err,results)=>{
             if(err){
                 console.log(err);
                 return res.status(500).json({
                     success: 0,
-                    message: "database connection error"
+                    message: "database connection error" 
                 });
             }
-            //handle account verification
-            const verificationCode = uuidv4();
-            const { to,subject,message }={
-                to: body.email,
-                subject: "Music Rental User Verification",
-                message: "Your verification code is "+verificationCode
-            }
-
-            const mailOptions={
-                from: process.env.AUTH_EMAIL,
-                to: to,
-                subject: subject,
-                text: message
-            };
-            getUserByEmail(body,(err,result)=>{
-                if(err){
-                    return res.status(200).json({
-                        success: 0,
-                        data: "An error has occured"
-                    });
-                }
-                const datas = {
-                    code:verificationCode,
-                    userId: result.id
-                };
-                transporter.sendMail(mailOptions)
-                       .then(()=>{
-                           console.log(datas.userId);
-                            return res.status(200).json({
-                                success: 1,
-                                message: "Sign up successful. A verification code as been sent to your email for validation",
-                                data: datas
-                            });
-                        })
-                       .catch((error)=>{
+            if(results.length>0){
+                return res.status(200).json({
+                    success: 2,
+                    message: "email already used!!"
+                });
+            }else{
+                create(body,(err,results)=>{
+                    if(err){
+                        console.log(err);
+                        return res.status(500).json({
+                            success: 0,
+                            message: "database connection error"
+                        });
+                    }
+                    //handle account verification
+                    const verificationCode = uuidv4();
+                    const { to,subject,message }={
+                        to: body.email,
+                        subject: "Music Rental User Verification",
+                        message: "Your verification code is "+verificationCode
+                    }
+        
+                    const mailOptions={
+                        from: process.env.AUTH_EMAIL,
+                        to: to,
+                        subject: subject,
+                        text: message
+                    };
+                    getUserByEmail(body,(err,result)=>{
+                        if(err){
                             return res.status(200).json({
                                 success: 0,
-                                data: "An error has occured"
+                                message: "An error has occured"
                             });
+                        }
+                        const datas = {
+                            code:verificationCode,
+                            userId: result[0].id
+                        };
+                        setVerificationCode(datas,(error,resultss)=>{
+                            if(error) return error;
+                            transporter.sendMail(mailOptions)
+                               .then(()=>{
+                                     
+                                    return res.status(200).json({
+                                        success: 1,
+                                        message: "Sign up successful. A verification code as been sent to your email for validation",
+                                        data: datas
+                                    });
+                                })
+                               .catch((error)=>{
+                                    return res.status(200).json({
+                                        success: 0,
+                                        message: "An error has occured"
+                                    });
+                                });
                         });
-            });
+                    });
+                });
+            }
+
         });
     },
     getUserById: (req,res)=>{
@@ -167,16 +187,16 @@ module.exports = {
             if(err){
                 console.log(err);
             }
-            if(!results){
+            if(!results[0]){
                 return res.json({
                     success: 0,
                     data: "Invalid password or email"
                 });
             }
-            const result = compareSync(body.password, results.password);
+            const result = compareSync(body.password, results[0].password);
             if(result){
-                results.password = undefined;
-                const jsonToken = sign({ result: results }, process.env.JWT_KEY, {
+                results[0].password = undefined;
+                const jsonToken = sign({ result: results[0] }, process.env.JWT_KEY, {
                     expiresIn: "24h"
                 });
                 return res.json({
@@ -215,7 +235,7 @@ module.exports = {
                     message: "Error not verified!!"
                 });
             }
-            if(data.verification==result.verification_code){
+            if(data.code==result.verification_code){
                 let val = updateUserById(data);
                 if(val){
                     return res.status(200).json({
