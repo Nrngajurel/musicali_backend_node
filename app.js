@@ -4,6 +4,8 @@ const app = express();
 const userRouter = require("./api/users/user.router");
 const adminRouter = require("./api/admin/admin.router");
 const productRouter = require("./api/product/product.router");
+const deliveryRouter = require("./api/delivery/delivery.router");
+const orderRouter = require("./api/order/order.router");
 const multer = require('multer');
 const bodyparser = require('body-parser')
 
@@ -18,7 +20,10 @@ app.use(bodyparser.urlencoded({
 
 app.use("/api/users", userRouter);
 app.use("/api/admin", adminRouter);
-app.use("/api/product/", productRouter)
+app.use("/api/product", productRouter);
+app.use("/api/delivery", deliveryRouter );
+app.use("/api/order", orderRouter);
+
 
 app.listen(process.env.APP_PORT,()=>{
     console.log("running on the server port "+process.env.APP_PORT);
