@@ -2,12 +2,13 @@ const pool = require("../../config/database");
 
 module.exports = {
     create: (data, callBack)=>{
-        pool.query(`insert into product(name, description, price)
-                    values(?,?,?)`,
+        pool.query(`insert into product(name, description, price, image)
+                    values(?,?,?,?)`,
                     [
                         data.name,
-                        data.description,
-                        data.price
+                        data.desc,
+                        data.price,
+                        data.imageK
                     ],
                     (error,results,fields)=>{
                         if(error){
