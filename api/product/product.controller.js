@@ -10,6 +10,7 @@ const { genSaltSync, hashSync } = require("bcrypt");
 module.exports = {
     createProduct: (req,res)=>{
         const body = req.body;
+        console.log(body);
         // const salt = genSaltSync(10);
         // body.password = hashSync(body.password, salt);
         if (!req.file) {
@@ -18,14 +19,17 @@ module.exports = {
                 message: "no file uploaded"
             });
         } else {
-            console.log(req.file.filename)
-            var imgsrc = 'http://localhost:3000/images/' + req.file.avatar.filename
+            var imgsrc = 'http://localhost:3000/images/' + req.file.filename
             // var insertData = "INSERT INTO users_file(file_src)VALUES(?)"
             // db.query(insertData, [imgsrc], (err, result) => {
             //     if (err) throw err
             //     console.log("file uploaded")
             // });
             body["imageK"] = imgsrc;
+            // body["name"] = req.name;
+            // body["price"] = 
+            // boydy["description"] = 
+            // console.log(body);
             create(body,(err,results)=>{
                 if(err){
                     console.log(err);

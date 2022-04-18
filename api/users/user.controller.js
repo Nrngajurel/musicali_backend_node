@@ -54,6 +54,7 @@ module.exports = {
                     message: "database connection error" 
                 });
             }
+
             if(results.length>0){
                 return res.status(200).json({
                     success: 2,
@@ -87,6 +88,12 @@ module.exports = {
                             return res.status(200).json({
                                 success: 0,
                                 message: "An error has occured"
+                            });
+                        }
+                        if(!result){
+                            return res.status(200).json({
+                                success: 0,
+                                message: "Invalid Data"
                             });
                         }
                         const datas = {
