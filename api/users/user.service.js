@@ -2,6 +2,7 @@ const pool = require("../../config/database");
 
 module.exports = {
     create: (data, callBack)=>{
+        console.log(data);
         pool.query(`insert into customer (name, address, number, password, email) values (?, ?, ?, ?, ?)`,
                     [
                         data.name,

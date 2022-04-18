@@ -42,6 +42,7 @@ module.exports = {
         }
     },
     getProducts: (req,res)=>{
+        console.log(req);
         getAllProduct((err,results)=>{
             if(err){
                 console.log(err);

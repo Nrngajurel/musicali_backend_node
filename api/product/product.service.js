@@ -21,6 +21,8 @@ module.exports = {
         pool.query(`select id, name, description, price from product`,
         [],
         (error,results,fields)=>{
+
+            console.log(results);
             if(error) return callBack(error);
             return callBack(null, results);
         }

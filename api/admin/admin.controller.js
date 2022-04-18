@@ -60,6 +60,7 @@ module.exports = {
     loginAdmin: (req,res)=>{
         const body = req.body;
         getAdminByUsername(body.username, (err,results)=>{
+            console.log(results);
             if(err){
                 console.log(err);
             }

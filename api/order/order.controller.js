@@ -3,6 +3,7 @@ const { addOrder, getOrders, getOrderById, getOrderByCustomerId, getOrderByProdu
 module.exports = {
     addOrder: (req,res)=>{
         const body = req.body;
+        
         addOrder(body,(err,results)=>{
             if(err){
                 return res.status(500).json({

@@ -2,7 +2,9 @@ const { createProduct, getProducts, updateProduct, deleteProduct } = require("./
 const router = require("express").Router();
 const { checkToken } = require("../../auth/token.validation");
 const multer = require('multer');
-const path = require('path')
+const path = require('path');
+const { request } = require("http");
+
 
 var storage = multer.diskStorage({
     destination: (req, file, callBack) => {
