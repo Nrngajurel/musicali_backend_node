@@ -9,6 +9,7 @@ const { genSaltSync, hashSync } = require("bcrypt");
 
 module.exports = {
     createProduct: (req,res)=>{
+        console.log("hello")
         const body = req.body;
         console.log(body);
         // const salt = genSaltSync(10);
