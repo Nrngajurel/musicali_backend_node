@@ -13,7 +13,7 @@ module.exports = {
             }
             return res.status(200).json({
                 success: 1,
-                message: "added delivery"
+                message: "order added"
             });
         });
     },
@@ -21,6 +21,7 @@ module.exports = {
         const body = req.body;
         getOrders(body,(err,results)=>{
             if(err){
+                console.log(err);
                 return res.status(500).json({
                     success: 0,
                     message: "Database connection error"

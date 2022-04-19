@@ -21,7 +21,7 @@ var upload = multer({
 
 router.post("/", upload.single('avatar'), createProduct);
 router.get("/", checkToken, getProducts);
-router.patch("/",checkToken,updateProduct);
-router.delete("/",checkToken,deleteProduct);
+router.patch("/",checkToken, updateProduct);
+router.delete("/",checkToken, deleteProduct);
 
 module.exports = router;

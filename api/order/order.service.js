@@ -16,7 +16,7 @@ module.exports = {
         });
     },
     getOrders: (data,callBack)=>{
-        pool.query(`select id, order_date, customer_id, product_id from order`,
+        pool.query(`select id, order_date, customer_id, product_id from orders`,
         [
             data.id,
         ],(error,results,fields)=>{
@@ -27,7 +27,7 @@ module.exports = {
         });
     },
     getOrderById: (data,callBack)=>{
-        pool.query(`select order_date, customer_id, product_id from order where id = ?`,
+        pool.query(`select * from orders where id = ?`,
         [
             data.id,
         ],(error,results,fields)=>{
@@ -39,7 +39,7 @@ module.exports = {
         });
     },
     getOrderByCustomerId: (data,callBack)=>{
-        pool.query(`select id, order_date, product_id from order where customer_id = ?`,
+        pool.query(`select id, order_date, product_id from orders where customer_id = ?`,
         [
             data.id,
         ],(error,results,fields)=>{
@@ -50,7 +50,7 @@ module.exports = {
         });
     },
     getOrderByProductId: (data,callBack)=>{
-        pool.query(`select id, order_date, customer_id from order where product_id = ?`,
+        pool.query(`select id, order_date, customer_id from orders where product_id = ?`,
         [
             data.id,
         ],(error,results,fields)=>{
@@ -61,7 +61,7 @@ module.exports = {
         });
     },
     deleteOrderById: (data,callBack)=>{
-        pool.query(`delete from order where id = ?`,
+        pool.query(`delete from orders where id = ?`,
         [
             data.id,
         ],(error,results,fields)=>{
