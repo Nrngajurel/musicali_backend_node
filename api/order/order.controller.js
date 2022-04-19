@@ -62,6 +62,8 @@ module.exports = {
     },
     getOrderByCustomerId: (req,res)=>{
         const body = req.body;
+        //read params from request
+        console.log(req.params);
         getOrderByCustomerId(body,(err,results)=>{
             if(err){
                 return res.status(500).json({

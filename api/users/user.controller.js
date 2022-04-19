@@ -210,7 +210,9 @@ module.exports = {
                 });
                 return res.json({
                     success: 1,
-                    token: jsonToken
+                    customer_id: results[0].id,
+                    token: jsonToken,
+                    user: results[0]
                 });
             }else{
                 return res.json({

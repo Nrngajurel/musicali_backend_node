@@ -7,7 +7,8 @@ const productRouter = require("./api/product/product.router");
 const deliveryRouter = require("./api/delivery/delivery.router");
 const orderRouter = require("./api/order/order.router");
 const multer = require('multer');
-const bodyparser = require('body-parser')
+const bodyparser = require('body-parser');
+const { json } = require("express/lib/response");
 
 app.use(express.json());
 // body-parser middleware use
@@ -17,6 +18,16 @@ app.use(express.static("./public"))
 app.use(bodyparser.urlencoded({
     extended: true
 }));
+
+app.use('/images',express.static("./api/public/images"));
+
+// log all the request of all route
+app.use((req, res, next) => {
+    console.log(`${req.method} request for ${req.url}`);
+    // requrst json
+    console.log("request json\n\n", req.body);
+    next();
+});
 
 app.use("/api/users", userRouter);
 app.use("/api/admin", adminRouter);

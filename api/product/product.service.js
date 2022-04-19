@@ -18,7 +18,7 @@ module.exports = {
                     } 
         )},
     getAllProduct: callBack=>{
-        pool.query(`select id, name, description, price from product`,
+        pool.query(`select id, name, description, price, image from product`,
         [],
         (error,results,fields)=>{
 
@@ -45,8 +45,10 @@ module.exports = {
         pool.query(`delete from product where id=?`,
         [data.id],
         (error,results,fields)=>{
+            console.log("error",error);
+            console.log("results",results);
             if(error) return callBack(error);
-            return callBack(null,results[0]);
+            return callBack(null,results);
         });
     }
 };  

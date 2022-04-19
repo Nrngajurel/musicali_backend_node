@@ -16,7 +16,12 @@ module.exports = {
         });
     },
     getOrders: (data,callBack)=>{
-        pool.query(`select id, order_date, customer_id, product_id from orders`,
+        // get orders with customer and product `select id, order_date, customer_id, product_id from orders`
+
+        pool.query(`select orders.id, orders.order_date, orders.customer_id, orders.product_id, customer.name as customer_name, product.name as product_name, product.image as product_image, product.price as product_price
+                     from orders
+                    join customer on customer.id = orders.customer_id
+                    join product on product.id = orders.product_id`,
         [
             data.id,
         ],(error,results,fields)=>{
@@ -39,7 +44,12 @@ module.exports = {
         });
     },
     getOrderByCustomerId: (data,callBack)=>{
-        pool.query(`select id, order_date, product_id from orders where customer_id = ?`,
+        console.log(data);
+        pool.query(`select orders.id, orders.order_date, orders.customer_id, orders.product_id, customer.name as customer_name, product.name as product_name, product.image as product_image, product.price as product_price
+        from orders
+        join customer on customer.id = orders.customer_id
+        join product on product.id = orders.product_id
+        where customer_id = ?`,
         [
             data.id,
         ],(error,results,fields)=>{
